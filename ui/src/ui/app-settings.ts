@@ -336,6 +336,8 @@ export function applyBorderRadius(value: number) {
   root.style.setProperty("--radius", `${Math.round(BASE_RADII.default * scale)}px`);
 }
 
+export { applySeamColor } from "./theme-seam-color.ts";
+
 export function applyResolvedTheme(host: SettingsHost, resolved: ResolvedTheme) {
   host.themeResolved = resolved;
   if (typeof document === "undefined") {

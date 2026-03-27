@@ -1,4 +1,5 @@
 import type { GatewayBrowserClient } from "../gateway.ts";
+import { applySeamColor } from "../theme-seam-color.ts";
 import type { ConfigSchemaResponse, ConfigSnapshot, ConfigUiHints } from "../types.ts";
 import type { JsonSchema } from "../views/config-form.shared.ts";
 import { coerceFormValues } from "./config/form-coerce.ts";
@@ -99,6 +100,10 @@ export function applyConfigSnapshot(state: ConfigState, snapshot: ConfigSnapshot
     state.configFormOriginal = cloneConfigObject(snapshot.config ?? {});
     state.configRawOriginal = rawFromSnapshot;
   }
+
+  // Apply ui.seamColor accent override whenever config is loaded or refreshed.
+  const uiConfig = snapshot.config as { ui?: { seamColor?: string } } | null | undefined;
+  applySeamColor(uiConfig?.ui?.seamColor ?? null);
 }
 
 function asJsonSchema(value: unknown): JsonSchema | null {

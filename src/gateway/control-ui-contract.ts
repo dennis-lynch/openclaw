@@ -6,4 +6,6 @@ export type ControlUiBootstrapConfig = {
   assistantAvatar: string;
   assistantAgentId: string;
   serverVersion?: string;
+  /** Accent color override from `ui.seamColor` in openclaw.json (hex string, e.g. "#00846F"). */
+  seamColor?: string | null;
 };

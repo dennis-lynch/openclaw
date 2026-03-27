@@ -4,6 +4,7 @@ import {
 } from "../../../../src/gateway/control-ui-contract.js";
 import { normalizeAssistantIdentity } from "../assistant-identity.ts";
 import { normalizeBasePath } from "../navigation.ts";
+import { applySeamColor } from "../theme-seam-color.ts";
 
 export type ControlUiBootstrapState = {
   basePath: string;
@@ -45,6 +46,10 @@ export async function loadControlUiBootstrapConfig(state: ControlUiBootstrapStat
     state.assistantAvatar = normalized.avatar;
     state.assistantAgentId = normalized.agentId ?? null;
     state.serverVersion = parsed.serverVersion ?? null;
+    // Apply seamColor early (before WS connects) so the accent is correct on first paint.
+    if (parsed.seamColor !== undefined) {
+      applySeamColor(parsed.seamColor);
+    }
   } catch {
     // Ignore bootstrap failures; UI will update identity after connecting.
   }

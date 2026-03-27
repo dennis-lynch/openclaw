@@ -361,12 +361,17 @@ export function handleControlUiHttpRequest(
       res.end();
       return true;
     }
+    const seamColor =
+      config && typeof (config as { ui?: { seamColor?: unknown } }).ui?.seamColor === "string"
+        ? (config as { ui: { seamColor: string } }).ui.seamColor
+        : null;
     sendJson(res, 200, {
       basePath,
       assistantName: identity.name,
       assistantAvatar: avatarValue ?? identity.avatar,
       assistantAgentId: identity.agentId,
       serverVersion: resolveRuntimeServiceVersion(process.env),
+      seamColor,
     } satisfies ControlUiBootstrapConfig);
     return true;
   }
